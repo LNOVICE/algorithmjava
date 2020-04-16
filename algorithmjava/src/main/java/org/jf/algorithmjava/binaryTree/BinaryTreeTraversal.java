@@ -1,8 +1,10 @@
 package org.jf.algorithmjava.binaryTree;
 
 import org.springframework.beans.BeanUtils;
-import sun.applet.Main;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -30,6 +32,68 @@ public class BinaryTreeTraversal {
 
     }
 
+    /**
+     * 先序遍历
+     * @param tree
+     */
+    public static void  preOrderTraversal(BinTree tree){
+        BinTree copyTree = new BinTree();
+        BeanUtils.copyProperties(tree, copyTree);
+        Stack<BinTree> binTreeStack = new Stack<BinTree>();
+        while (copyTree != null || !binTreeStack.isEmpty()) {
+            while (copyTree != null) {
+                binTreeStack.push(copyTree);
+                System.out.println(copyTree.getData());;
+                copyTree = copyTree.getLeft();
+            }
+
+            if(!binTreeStack.isEmpty()) {
+                copyTree = binTreeStack.pop();
+                copyTree = copyTree.getRight();
+            }
+
+        }
+
+    }
+
+
+
+//前序遍历为 root -> left -> right，后序遍历为 left -> right -> root，可以修改前序遍历成为 root -> right -> left，那么这个顺序就和后序遍历正好相反。
+
+    /**
+     * 后序遍历
+     * @param tree
+     */
+    public static void  postOrderTraversal(BinTree tree){
+        BinTree copyTree = new BinTree();
+        BeanUtils.copyProperties(tree, copyTree);
+        List<Object> tmpList = new ArrayList<Object>();
+        Stack<BinTree> binTreeStack = new Stack<BinTree>();
+        while (copyTree != null || !binTreeStack.isEmpty()) {
+            while (copyTree != null) {
+                binTreeStack.push(copyTree);
+                tmpList.add(copyTree.getData());
+                copyTree = copyTree.getRight();
+            }
+
+            if(!binTreeStack.isEmpty()) {
+                copyTree = binTreeStack.pop();
+                copyTree = copyTree.getLeft();
+            }
+
+        }
+        Collections.reverse(tmpList);
+        for (Object tmp :tmpList) {
+
+            System.out.println(tmp);
+        }
+
+    }
+
+
+
+
+
 //     1
 //   2   3
 // 4  5 6
@@ -42,7 +106,18 @@ public class BinaryTreeTraversal {
         BinTree<Integer> tree3 = new BinTree<Integer>(3,tree6,null);
         BinTree<Integer> tree2 = new BinTree<Integer>(2,tree4,tree5);
         BinTree<Integer> tree1 = new BinTree<Integer>(1,tree2,tree3);
-        inOrderTraversal(tree1);
+//        System.out.println("-------------inOderTraversal start-------------");
+//        inOrderTraversal(tree1);
+//        System.out.println("-------------inOderTraversal end-------------");
+//        System.out.println("-------------preOrderTraversal start-------------");
+//        preOrderTraversal(tree1);
+//        System.out.println("-------------preOrderTraversal end-------------");
+
+        System.out.println("-------------postOrderTraversal start-------------");
+        postOrderTraversal(tree1);
+        System.out.println("-------------postOrderTraversal end-------------");
+        System.out.println("tree1:"+tree1.getData());
+
 
 
     }
