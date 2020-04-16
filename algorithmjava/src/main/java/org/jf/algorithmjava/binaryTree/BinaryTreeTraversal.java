@@ -2,10 +2,7 @@ package org.jf.algorithmjava.binaryTree;
 
 import org.springframework.beans.BeanUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 使用堆栈的方式实现二叉树先序，中序， 后序遍历
@@ -13,8 +10,7 @@ import java.util.Stack;
 public class BinaryTreeTraversal {
 
     public static void  inOrderTraversal(BinTree tree){
-        BinTree copyTree = new BinTree();
-        BeanUtils.copyProperties(tree, copyTree);
+        BinTree copyTree = tree;
         Stack<BinTree> binTreeStack = new Stack<BinTree>();
         while (copyTree != null || !binTreeStack.isEmpty()) {
             while (copyTree != null) {
@@ -37,8 +33,7 @@ public class BinaryTreeTraversal {
      * @param tree
      */
     public static void  preOrderTraversal(BinTree tree){
-        BinTree copyTree = new BinTree();
-        BeanUtils.copyProperties(tree, copyTree);
+        BinTree copyTree = tree;
         Stack<BinTree> binTreeStack = new Stack<BinTree>();
         while (copyTree != null || !binTreeStack.isEmpty()) {
             while (copyTree != null) {
@@ -65,8 +60,7 @@ public class BinaryTreeTraversal {
      * @param tree
      */
     public static void  postOrderTraversal(BinTree tree){
-        BinTree copyTree = new BinTree();
-        BeanUtils.copyProperties(tree, copyTree);
+        BinTree copyTree = tree;
         List<Object> tmpList = new ArrayList<Object>();
         Stack<BinTree> binTreeStack = new Stack<BinTree>();
         while (copyTree != null || !binTreeStack.isEmpty()) {
@@ -87,6 +81,29 @@ public class BinaryTreeTraversal {
 
             System.out.println(tmp);
         }
+
+    }
+
+    /**
+     * 层序遍历
+     * @param tree
+     */
+
+    public static void  levelOrderTraversal(BinTree tree) {
+        BinTree copyTree = tree;
+        Queue<BinTree> binTreeQueue = new LinkedList<BinTree>();
+        if (copyTree == null) {
+            return;
+        }
+        binTreeQueue.offer(copyTree);
+        while (binTreeQueue.peek()!= null) {
+            //移除队首根节点，将左子树右子树入队
+            copyTree = binTreeQueue.poll();
+            System.out.println(copyTree.getData());
+            binTreeQueue.offer(copyTree.left);
+            binTreeQueue.offer(copyTree.right);
+        }
+
 
     }
 
@@ -116,6 +133,10 @@ public class BinaryTreeTraversal {
         System.out.println("-------------postOrderTraversal start-------------");
         postOrderTraversal(tree1);
         System.out.println("-------------postOrderTraversal end-------------");
+
+        System.out.println("-------------levelOrderTraversal start-------------");
+        levelOrderTraversal(tree1);
+        System.out.println("-------------levelOrderTraversal end-------------");
         System.out.println("tree1:"+tree1.getData());
 
 
