@@ -11,6 +11,7 @@ public class Test {
         per1.setAge(14);;
         System.out.println(person.getName()+" "+person.getAge());
         System.out.println(per1.getName()+" "+per1.getAge());
+        
     }
 }
 
